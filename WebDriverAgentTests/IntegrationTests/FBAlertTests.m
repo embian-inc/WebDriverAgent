@@ -11,7 +11,6 @@
 
 #import <WebDriverAgentLib/FBAlert.h>
 
-#import "FBAlert.h"
 #import "FBConfiguration.h"
 #import "FBIntegrationTestCase.h"
 #import "FBTestMacros.h"
@@ -201,12 +200,11 @@
   });
   self.interruptionMonitorToken = [self addUIInterruptionMonitorWithDescription:@"WebDriverAgent Alerts Handler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
     FBAlert *alert = [FBAlert alertWithElement:interruptingElement];
-    NSError *error;
     if ([FBConfiguration.autoAlertAction isEqualToString:FB_ALERT_ACCEPT_ACTION]) {
-      [alert acceptWithError:&error];
+      [alert acceptWithError:nil];
     }
     if ([FBConfiguration.autoAlertAction isEqualToString:FB_ALERT_DISMISS_ACTION]) {
-      [alert dismissWithError:&error];
+      [alert dismissWithError:nil];
     }
 
     return YES;
