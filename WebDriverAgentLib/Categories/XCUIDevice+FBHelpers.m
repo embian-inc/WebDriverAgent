@@ -143,6 +143,46 @@ static bool fb_isLocked;
   return FBAdjustScreenshotOrientationForApplication(imageData, orientation);
 }
 
+- (NSData *)fb_rawScreenshotWithQuality:(NSUInteger)quality error:(NSError*__autoreleasing*)error
+{
+  id xcScreen = NSClassFromString(@"XCUIScreen");
+  if (nil == xcScreen) {
+    NSData *result = [[XCAXClient_iOS sharedClient] screenshotData];
+    if (nil == result) {
+      if (error) {
+        *error = [[FBErrorBuilder.builder withDescription:@"Cannot take a screenshot of the current screen state"] build];
+      }
+      return nil;
+    }
+    return result;
+  }
+
+  id mainScreen = [xcScreen valueForKey:@"mainScreen"];
+  SEL mSelector = NSSelectorFromString(@"screenshotDataForQuality:rect:error:");
+  NSMethodSignature *mSignature = [mainScreen methodSignatureForSelector:mSelector];
+  NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:mSignature];
+  [invocation setTarget:mainScreen];
+  [invocation setSelector:mSelector];
+  [invocation setArgument:&quality atIndex:2];
+  XCUIApplication *systemApp = [FBApplication fb_applicationWithPID:[[[XCAXClient_iOS sharedClient] systemApplication] processIdentifier]];
+  CGRect screenRect = [systemApp frame];
+  if (systemApp.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+      systemApp.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+    CGSize previousSize = screenRect.size;
+    screenRect.size.width = previousSize.height;
+    screenRect.size.height = previousSize.width;
+  }
+  [invocation setArgument:&screenRect atIndex:3];
+  [invocation setArgument:&error atIndex:4];
+  [invocation invoke];
+  NSData __unsafe_unretained *imageData;
+  [invocation getReturnValue:&imageData];
+  if (nil == imageData) {
+    return nil;
+  }
+  return imageData;
+}
+
 - (BOOL)fb_fingerTouchShouldMatch:(BOOL)shouldMatch
 {
   const char *name;

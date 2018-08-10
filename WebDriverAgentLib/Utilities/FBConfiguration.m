@@ -16,6 +16,7 @@
 #import "XCElementSnapshot.h"
 
 static NSUInteger const DefaultStartingPort = 8100;
+static NSUInteger const DefaultScreenshotBroadcasterPort = 9100;
 static NSUInteger const DefaultPortRange = 100;
 
 static BOOL FBShouldUseTestManagerForVisibilityDetection = NO;
@@ -46,11 +47,22 @@ static NSUInteger FBMaxTypingFrequency = 60;
   }
 
   // Existence of USE_PORT in the environment implies the port range is managed by the launching process.
-  if (NSProcessInfo.processInfo.environment[@"USE_PORT"]) {
+  if (NSProcessInfo.processInfo.environment[@"USE_PORT"] &&
+      [NSProcessInfo.processInfo.environment[@"USE_PORT"] length] > 0) {
     return NSMakeRange([NSProcessInfo.processInfo.environment[@"USE_PORT"] integerValue] , 1);
   }
 
   return NSMakeRange(DefaultStartingPort, DefaultPortRange);
+}
+
++ (NSInteger)screenshotsBroadcasterPort
+{
+  if (NSProcessInfo.processInfo.environment[@"SCREENSHOT_SOCKET_PORT"] &&
+      [NSProcessInfo.processInfo.environment[@"SCREENSHOT_SOCKET_PORT"] length] > 0) {
+    return [NSProcessInfo.processInfo.environment[@"SCREENSHOT_SOCKET_PORT"] integerValue];
+  }
+
+  return DefaultScreenshotBroadcasterPort;
 }
 
 + (BOOL)verboseLoggingEnabled

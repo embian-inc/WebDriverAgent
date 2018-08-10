@@ -76,6 +76,11 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "SCREENSHOT_SOCKET_PORT"
+            value = "$(SCREENSHOT_SOCKET_PORT)"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "WDA_PRODUCT_BUNDLE_IDENTIFIER"
             value = "$(WDA_PRODUCT_BUNDLE_IDENTIFIER)"
             isEnabled = "YES">
