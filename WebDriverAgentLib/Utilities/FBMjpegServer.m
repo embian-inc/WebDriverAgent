@@ -9,7 +9,10 @@
 
 @import CocoaAsyncSocket;
 
+#import "FBApplication.h"
 #import "FBMjpegServer.h"
+#import "FBXCodeCompatibility.h"
+#import "XCAXClient_iOS.h"
 #import "XCUIDevice+FBHelpers.h"
 
 static const NSTimeInterval FPS = 10;
@@ -20,10 +23,12 @@ static NSString *const SERVER_NAME = @"WDA MJPEG Server";
 @property (nonatomic) NSTimer *mainTimer;
 @property (nonatomic) dispatch_queue_t backgroundQueue;
 @property (nonatomic) NSMutableArray<GCDAsyncSocket *> *activeClients;
+@property (atomic) CGRect screenRect;
 
 @end
 
 @implementation FBMjpegServer
+
 
 - (instancetype)init
 {
@@ -37,7 +42,10 @@ static NSString *const SERVER_NAME = @"WDA MJPEG Server";
         }
       }
 
-      NSData *screenshotData = [[XCUIDevice sharedDevice] fb_rawScreenshotWithQuality:2 rect:[self retrieveScreenRect] error:nil];
+      if (CGRectIsEmpty(self.screenRect)) {
+        return;
+      }
+      NSData *screenshotData = [[XCUIDevice sharedDevice] fb_rawScreenshotWithQuality:2 rect:self.screenRect error:nil];
       if (nil == screenshotData) {
         return;
       }
@@ -59,17 +67,27 @@ static NSString *const SERVER_NAME = @"WDA MJPEG Server";
   return self;
 }
 
-- (CGRect)retrieveScreenRect
+- (void)refreshScreenRect
 {
-  CGRect screenRect = [UIScreen mainScreen].bounds;
-  CGFloat scale = [UIScreen mainScreen].scale;
-  screenRect.size.width *= scale;
-  screenRect.size.height *= scale;
-  return screenRect;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    XCUIApplication *systemApp = [FBApplication fb_applicationWithPID:
+                                  [[[XCAXClient_iOS sharedClient] systemApplication] processIdentifier]];
+    UIInterfaceOrientation orientation = systemApp.interfaceOrientation;
+    CGRect screenRect = [systemApp frame];
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+      CGFloat previousWidth = screenRect.size.width;
+      CGFloat previousHeigth = screenRect.size.height;
+      screenRect.size.width = previousHeigth;
+      screenRect.size.height = previousWidth;
+    }
+    self.screenRect = screenRect;
+  });
 }
 
 - (void)didClientConnect:(GCDAsyncSocket *)newClient activeClients:(NSArray<GCDAsyncSocket *> *)activeClients
 {
+  [self refreshScreenRect];
+
   dispatch_async(self.backgroundQueue, ^{
     NSString *streamHeader = [NSString stringWithFormat:@"HTTP/1.0 200 OK\r\nServer: %@\r\nConnection: close\r\nMax-Age: 0\r\nExpires: 0\r\nCache-Control: no-cache, private\r\nPragma: no-cache\r\nContent-Type: multipart/x-mixed-replace; boundary=--BoundaryString\r\n\r\n", SERVER_NAME];
     [newClient writeData:(id)[streamHeader dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
