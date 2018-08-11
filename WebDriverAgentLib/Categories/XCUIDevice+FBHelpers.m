@@ -143,7 +143,7 @@ static bool fb_isLocked;
   return FBAdjustScreenshotOrientationForApplication(imageData, orientation);
 }
 
-- (NSData *)fb_rawScreenshotWithQuality:(NSUInteger)quality error:(NSError*__autoreleasing*)error
+- (NSData *)fb_rawScreenshotWithQuality:(NSUInteger)quality rect:(CGRect)rect error:(NSError*__autoreleasing*)error
 {
   id xcScreen = NSClassFromString(@"XCUIScreen");
   if (nil == xcScreen) {
@@ -164,15 +164,7 @@ static bool fb_isLocked;
   [invocation setTarget:mainScreen];
   [invocation setSelector:mSelector];
   [invocation setArgument:&quality atIndex:2];
-  XCUIApplication *systemApp = [FBApplication fb_applicationWithPID:[[[XCAXClient_iOS sharedClient] systemApplication] processIdentifier]];
-  CGRect screenRect = [systemApp frame];
-  if (systemApp.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-      systemApp.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-    CGSize previousSize = screenRect.size;
-    screenRect.size.width = previousSize.height;
-    screenRect.size.height = previousSize.width;
-  }
-  [invocation setArgument:&screenRect atIndex:3];
+  [invocation setArgument:&rect atIndex:3];
   [invocation setArgument:&error atIndex:4];
   [invocation invoke];
   NSData __unsafe_unretained *imageData;

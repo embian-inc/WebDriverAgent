@@ -15,9 +15,9 @@
 #import "FBCommandHandler.h"
 #import "FBErrorBuilder.h"
 #import "FBExceptionHandler.h"
+#import "FBMjpegServer.h"
 #import "FBRouteRequest.h"
 #import "FBRuntimeUtils.h"
-#import "FBScreenshotsBroadcaster.h"
 #import "FBSession.h"
 #import "FBTCPSocket.h"
 #import "FBUnknownCommands.h"
@@ -116,11 +116,11 @@ static NSString *const FBServerURLEndMarker = @"<-ServerURLHere";
 - (void)initScreenshotsBroadcaster
 {
   self.screenshotsBroadcaster = [[FBTCPSocket alloc]
-                                 initWithPort:(uint16_t)FBConfiguration.screenshotsBroadcasterPort];
-  self.screenshotsBroadcaster.delegate = [[FBScreenshotsBroadcaster alloc] init];
+                                 initWithPort:(uint16_t)FBConfiguration.mjpegServerPort];
+  self.screenshotsBroadcaster.delegate = [[FBMjpegServer alloc] init];
   NSError *error;
   if (![self.screenshotsBroadcaster startWithError:&error]) {
-    [FBLogger logFmt:@"Cannot init screenshots broadcaster service on port %@. Original error: %@", @(FBConfiguration.screenshotsBroadcasterPort), error.description];
+    [FBLogger logFmt:@"Cannot init screenshots broadcaster service on port %@. Original error: %@", @(FBConfiguration.mjpegServerPort), error.description];
     self.screenshotsBroadcaster = nil;
   }
 }

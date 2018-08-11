@@ -76,8 +76,8 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "SCREENSHOT_SOCKET_PORT"
-            value = "$(SCREENSHOT_SOCKET_PORT)"
+            key = "MJPEG_SERVER_PORT"
+            value = "$(MJPEG_SERVER_PORT)"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

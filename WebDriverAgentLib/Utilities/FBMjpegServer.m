@@ -7,13 +7,15 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import "FBScreenshotsBroadcaster.h"
-#import "XCUIDevice+FBHelpers.h"
 @import CocoaAsyncSocket;
 
-static const NSTimeInterval FPS = 10;
+#import "FBMjpegServer.h"
+#import "XCUIDevice+FBHelpers.h"
 
-@interface FBScreenshotsBroadcaster()
+static const NSTimeInterval FPS = 10;
+static NSString *const SERVER_NAME = @"WDA MJPEG Server";
+
+@interface FBMjpegServer()
 
 @property (nonatomic) NSTimer *mainTimer;
 @property (nonatomic) dispatch_queue_t backgroundQueue;
@@ -21,7 +23,7 @@ static const NSTimeInterval FPS = 10;
 
 @end
 
-@implementation FBScreenshotsBroadcaster
+@implementation FBMjpegServer
 
 - (instancetype)init
 {
@@ -35,16 +37,20 @@ static const NSTimeInterval FPS = 10;
         }
       }
 
-      NSError *error;
-      NSData *screenshotData = [[XCUIDevice sharedDevice] fb_rawScreenshotWithQuality:2 error:&error];
+      NSData *screenshotData = [[XCUIDevice sharedDevice] fb_rawScreenshotWithQuality:2 rect:[self retrieveScreenRect] error:nil];
       if (nil == screenshotData) {
         return;
       }
 
       dispatch_async(self.backgroundQueue, ^{
+        NSString *chunkHeader = [NSString stringWithFormat:@"--BoundaryString\r\nContent-type: image/jpg\r\nContent-Length: %@\r\n\r\n", @(screenshotData.length)];
+        NSString *chunkTail = @"\r\n\r\n";
+        NSMutableData *chunk = [[chunkHeader dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
+        [chunk appendData:screenshotData];
+        [chunk appendData:(id)[chunkTail dataUsingEncoding:NSUTF8StringEncoding]];
         @synchronized (self.activeClients) {
           for (GCDAsyncSocket *client in self.activeClients) {
-            [client writeData:screenshotData withTimeout:-1 tag:0];
+            [client writeData:chunk.copy withTimeout:-1 tag:0];
           }
         }
       });
@@ -53,11 +59,21 @@ static const NSTimeInterval FPS = 10;
   return self;
 }
 
-- (void)didClientConnect:(NSArray<GCDAsyncSocket *> *)activeClients
+- (CGRect)retrieveScreenRect
 {
-  if (0 == activeClients.count) {
-    return;
-  }
+  CGRect screenRect = [UIScreen mainScreen].bounds;
+  CGFloat scale = [UIScreen mainScreen].scale;
+  screenRect.size.width *= scale;
+  screenRect.size.height *= scale;
+  return screenRect;
+}
+
+- (void)didClientConnect:(GCDAsyncSocket *)newClient activeClients:(NSArray<GCDAsyncSocket *> *)activeClients
+{
+  dispatch_async(self.backgroundQueue, ^{
+    NSString *streamHeader = [NSString stringWithFormat:@"HTTP/1.0 200 OK\r\nServer: %@\r\nConnection: close\r\nMax-Age: 0\r\nExpires: 0\r\nCache-Control: no-cache, private\r\nPragma: no-cache\r\nContent-Type: multipart/x-mixed-replace; boundary=--BoundaryString\r\n\r\n", SERVER_NAME];
+    [newClient writeData:(id)[streamHeader dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:0];
+  });
 
   @synchronized (self.activeClients) {
     [self.activeClients removeAllObjects];

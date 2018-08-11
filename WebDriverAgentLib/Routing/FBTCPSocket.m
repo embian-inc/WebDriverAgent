@@ -67,11 +67,11 @@
 {
   NSString *host = [newSocket connectedHost];
   UInt16 port = [newSocket connectedPort];
-  [FBLogger logFmt:@"Got a new web socket connection from %@:%d", host, port];
+  [FBLogger logFmt:@"Starting screenshots broadcast to %@:%d", host, port];
 
   @synchronized(self.connectedClients) {
     [self.connectedClients addObject:newSocket];
-    [self.delegate didClientConnect:self.connectedClients.copy];
+    [self.delegate didClientConnect:newSocket activeClients:self.connectedClients.copy];
   }
 }
 

@@ -39,8 +39,8 @@
 		715557D4211DBCE700613B26 /* FBTCPSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 715557D2211DBCE700613B26 /* FBTCPSocket.m */; };
 		71555A3D1DEC460A007D4A8B /* NSExpression+FBFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 71555A3B1DEC460A007D4A8B /* NSExpression+FBFormat.h */; };
 		71555A3E1DEC460A007D4A8B /* NSExpression+FBFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 71555A3C1DEC460A007D4A8B /* NSExpression+FBFormat.m */; };
-		7155D703211DCEF400166C20 /* FBScreenshotsBroadcaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 7155D701211DCEF400166C20 /* FBScreenshotsBroadcaster.h */; };
-		7155D704211DCEF400166C20 /* FBScreenshotsBroadcaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 7155D702211DCEF400166C20 /* FBScreenshotsBroadcaster.m */; };
+		7155D703211DCEF400166C20 /* FBMjpegServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7155D701211DCEF400166C20 /* FBMjpegServer.h */; };
+		7155D704211DCEF400166C20 /* FBMjpegServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7155D702211DCEF400166C20 /* FBMjpegServer.m */; };
 		715AFAC11FFA29180053896D /* FBScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 715AFABF1FFA29180053896D /* FBScreen.h */; };
 		715AFAC21FFA29180053896D /* FBScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 715AFAC01FFA29180053896D /* FBScreen.m */; };
 		715AFAC41FFA2AAF0053896D /* FBScreenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 715AFAC31FFA2AAF0053896D /* FBScreenTests.m */; };
@@ -55,6 +55,10 @@
 		71A224E51DE2F56600844D55 /* NSPredicate+FBFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 71A224E31DE2F56600844D55 /* NSPredicate+FBFormat.h */; };
 		71A224E61DE2F56600844D55 /* NSPredicate+FBFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A224E41DE2F56600844D55 /* NSPredicate+FBFormat.m */; };
 		71A224E81DE326C500844D55 /* NSPredicateFBFormatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A224E71DE326C500844D55 /* NSPredicateFBFormatTests.m */; };
+		71A2FC19211EDF2F008FCCB0 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71018200211DF62C002FD3A8 /* libxml2.tbd */; };
+		71A2FC1A211EDF47008FCCB0 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71018200211DF62C002FD3A8 /* libxml2.tbd */; };
+		71A2FC1B211EDF50008FCCB0 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71018200211DF62C002FD3A8 /* libxml2.tbd */; };
+		71A2FC1C211EDF55008FCCB0 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71018200211DF62C002FD3A8 /* libxml2.tbd */; };
 		71A7EAF51E20516B001DA4F2 /* XCUIElement+FBClassChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 71A7EAF31E20516B001DA4F2 /* XCUIElement+FBClassChain.h */; };
 		71A7EAF61E20516B001DA4F2 /* XCUIElement+FBClassChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A7EAF41E20516B001DA4F2 /* XCUIElement+FBClassChain.m */; };
 		71A7EAF91E224648001DA4F2 /* FBClassChainQueryParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 71A7EAF71E224648001DA4F2 /* FBClassChainQueryParser.h */; };
@@ -467,8 +471,8 @@
 		715557D2211DBCE700613B26 /* FBTCPSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBTCPSocket.m; sourceTree = "<group>"; };
 		71555A3B1DEC460A007D4A8B /* NSExpression+FBFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSExpression+FBFormat.h"; sourceTree = "<group>"; };
 		71555A3C1DEC460A007D4A8B /* NSExpression+FBFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSExpression+FBFormat.m"; sourceTree = "<group>"; };
-		7155D701211DCEF400166C20 /* FBScreenshotsBroadcaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBScreenshotsBroadcaster.h; sourceTree = "<group>"; };
-		7155D702211DCEF400166C20 /* FBScreenshotsBroadcaster.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBScreenshotsBroadcaster.m; sourceTree = "<group>"; };
+		7155D701211DCEF400166C20 /* FBMjpegServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBMjpegServer.h; sourceTree = "<group>"; };
+		7155D702211DCEF400166C20 /* FBMjpegServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBMjpegServer.m; sourceTree = "<group>"; };
 		715AFABF1FFA29180053896D /* FBScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBScreen.h; sourceTree = "<group>"; };
 		715AFAC01FFA29180053896D /* FBScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBScreen.m; sourceTree = "<group>"; };
 		715AFAC31FFA2AAF0053896D /* FBScreenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBScreenTests.m; sourceTree = "<group>"; };
@@ -802,6 +806,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A2FC1C211EDF55008FCCB0 /* libxml2.tbd in Frameworks */,
 				EE2202171ECC612200A29571 /* WebDriverAgentLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +815,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A2FC1B211EDF50008FCCB0 /* libxml2.tbd in Frameworks */,
 				EE5095F91EBCC9090028E2FE /* WebDriverAgentLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,6 +824,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A2FC19211EDF2F008FCCB0 /* libxml2.tbd in Frameworks */,
 				AD8D96F21D3C12990061268E /* WebDriverAgentLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -833,6 +840,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A2FC1A211EDF47008FCCB0 /* libxml2.tbd in Frameworks */,
 				EE9B76A01CF79C0F00275851 /* WebDriverAgentLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1094,8 +1102,8 @@
 				EEE9B4711CD02B88009D2030 /* FBRunLoopSpinner.m */,
 				EE9AB7911CAEDF0C008C271F /* FBRuntimeUtils.h */,
 				EE9AB7921CAEDF0C008C271F /* FBRuntimeUtils.m */,
-				7155D701211DCEF400166C20 /* FBScreenshotsBroadcaster.h */,
-				7155D702211DCEF400166C20 /* FBScreenshotsBroadcaster.m */,
+				7155D701211DCEF400166C20 /* FBMjpegServer.h */,
+				7155D702211DCEF400166C20 /* FBMjpegServer.m */,
 				714097491FAE1B51008FB2C5 /* FBW3CActionsSynthesizer.h */,
 				7140974A1FAE1B51008FB2C5 /* FBW3CActionsSynthesizer.m */,
 				EE5A24401F136C8D0078B1D9 /* FBXCodeCompatibility.h */,
@@ -1563,7 +1571,7 @@
 				714097471FAE1B32008FB2C5 /* FBAppiumActionsSynthesizer.h in Headers */,
 				EE7E271C1D06C69F001BEC7B /* FBDebugLogDelegateDecorator.h in Headers */,
 				EEDFE1211D9C06F800E6FFE5 /* XCUIDevice+FBHealthCheck.h in Headers */,
-				7155D703211DCEF400166C20 /* FBScreenshotsBroadcaster.h in Headers */,
+				7155D703211DCEF400166C20 /* FBMjpegServer.h in Headers */,
 				EE35AD761E3B77D600A02D78 /* XCUIRecorderNodeFinderMatch.h in Headers */,
 				EE35AD6C1E3B77D600A02D78 /* XCUIApplicationProcess.h in Headers */,
 				7140974B1FAE1B51008FB2C5 /* FBW3CActionsSynthesizer.h in Headers */,
@@ -1857,7 +1865,7 @@
 				EE158AE21CBD456F00A3E3F0 /* FBRouteRequest.m in Sources */,
 				EE158ADB1CBD456F00A3E3F0 /* FBResponseJSONPayload.m in Sources */,
 				EE7E271F1D06C69F001BEC7B /* FBXCTestCaseImplementationFailureHoldingProxy.m in Sources */,
-				7155D704211DCEF400166C20 /* FBScreenshotsBroadcaster.m in Sources */,
+				7155D704211DCEF400166C20 /* FBMjpegServer.m in Sources */,
 				EEDFE1221D9C06F800E6FFE5 /* XCUIDevice+FBHealthCheck.m in Sources */,
 				EE158AF81CBD456F00A3E3F0 /* FBSpringboardApplication.m in Sources */,
 				EE158AD91CBD456F00A3E3F0 /* FBResponseFilePayload.m in Sources */,
