@@ -369,8 +369,14 @@
   CGPoint tapPoint = CGPointMake((CGFloat)[request.arguments[@"x"] doubleValue], (CGFloat)[request.arguments[@"y"] doubleValue]);
   XCUIElement *element = [elementCache elementForUUID:request.parameters[@"uuid"]];
   if (nil == element) {
-    XCUICoordinate *tapCoordinate = [self.class gestureCoordinateWithCoordinate:tapPoint application:request.session.activeApplication shouldApplyOrientationWorkaround:isSDKVersionLessThan(@"11.0")];
-    [tapCoordinate tap];
+    //MODIFIED BY MO: if the active application was force closed,  tapCoordinate tap api is not responsed, long time
+//    XCUICoordinate *tapCoordinate = [self.class gestureCoordinateWithCoordinate:tapPoint application:request.session.activeApplication shouldApplyOrientationWorkaround:isSDKVersionLessThan(@"11.0")];
+//    [tapCoordinate tap];
+    NSError *error;
+    element = request.session.activeApplication;
+    if (![element fb_tapCoordinate:tapPoint error:&error]) {
+      return FBResponseWithError(error);
+    }
   } else {
     NSError *error;
     if (![element fb_tapCoordinate:tapPoint error:&error]) {

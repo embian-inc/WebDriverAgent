@@ -164,4 +164,67 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
           fb_firstMatch];
 }
 
+
+// ADDED BY MO
+- (NSDictionary *)fb_tree_v2
+{
+  if ([FBConfiguration shouldUseTestManagerForVisibilityDetection]) {
+    [self fb_waitUntilSnapshotIsStable];
+  }
+  
+  NSError * error;
+  id<XCUIElementSnapshot> snapshot = [self snapshotWithError:&error];
+  if (!snapshot) {
+    //TODO: find child snapshots
+    return [NSDictionary dictionary].copy;
+  }
+  
+  //  NSDictionary<XCUIElementAttributeName, id> *snapshotTree = snapshot.dictionaryRepresentation;
+  return snapshot.dictionaryRepresentation;
+}
+
+// ADDED BY MO
+- (NSString *)fb_descriptionRepresentation_v2 {
+  NSMutableArray<NSString *> *childrenDescriptions = [NSMutableArray array];
+  for (XCUIElement *child in [self childrenMatchingType:XCUIElementTypeAny].allElementsBoundByAccessibilityElement) {
+//    [childrenDescriptions addObject:(child.fb_snapshotWithAttributes ? : child.fb_lastSnapshot).recursiveDescriptionIncludingAccessibilityElement];
+    [childrenDescriptions addObject:child.fb_lastSnapshot.recursiveDescriptionIncludingAccessibilityElement];
+//    [childrenDescriptions addObject:child.debugDescription];
+  }
+  // debugDescription property of XCUIApplication instance shows descendants addresses in memory
+  // instead of the actual information about them, however the representation works properly
+  // for all descendant elements
+  
+  UIInterfaceOrientation orientation = self.interfaceOrientation;
+  CGRect rect = self.frame;
+  CGFloat x = rect.origin.x;
+  CGFloat y = rect.origin.y;
+  CGFloat width = rect.size.width;
+  CGFloat height = rect.size.height;
+  
+  int rotation = 0;
+  if (orientation == UIInterfaceOrientationLandscapeRight) {
+    rotation = 1;
+    width = rect.size.height;
+    height = rect.size.width;
+    
+  } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    rotation = 2;
+    
+  } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+    rotation = 3;
+    width = rect.size.height;
+    height = rect.size.width;
+  }
+  
+  NSString * applicationDescription = [NSString stringWithFormat:@"Application, bundle: %@, rotation: %d, {{%.1f, %.1f}, {%.1f, %.1f}}", self.bundleID, rotation, x, y, width, height];
+  
+  if (0 == childrenDescriptions.count) {
+    return applicationDescription;
+  }
+  
+  [childrenDescriptions insertObject:applicationDescription atIndex:0];
+  return [childrenDescriptions componentsJoinedByString:@"\n\n"];
+}
+
 @end
