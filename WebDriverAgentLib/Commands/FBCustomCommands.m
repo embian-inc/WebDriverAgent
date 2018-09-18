@@ -51,11 +51,24 @@
     [[FBRoute POST:@"/wda/setPasteboard"] respondWithTarget:self action:@selector(handleSetPasteboard:)],
     [[FBRoute POST:@"/wda/getPasteboard"] respondWithTarget:self action:@selector(handleGetPasteboard:)],
     [[FBRoute GET:@"/wda/batteryInfo"] respondWithTarget:self action:@selector(handleGetBatteryInfo:)],
+    //ADDED BY MO: waitForIdle
+    [[FBRoute POST:@"/wait_for_idle"] respondWithTarget:self action:@selector(handleWaitForIdle:)],
   ];
 }
 
 
 #pragma mark - Commands
+//ADDED BY MO: handle waitForIdle
+static NSString *const DEFAULT_TIMEOUT = @"5000";
++ (id<FBResponsePayload>)handleWaitForIdle:(FBRouteRequest *)request
+{
+  NSDate * start = [NSDate date];
+  FBApplication *application = request.session.activeApplication ?: [FBApplication fb_activeApplication];
+  [application fb_waitUntilSnapshotIsStable];
+  NSTimeInterval duration = [start timeIntervalSinceNow]*-1;
+  return FBResponseWithStatus(FBCommandStatusNoError, @{@"value": [NSString stringWithFormat:@"%f seconds", duration], @"version": @"v1.0"});
+}
+
 
 + (id<FBResponsePayload>)handleHomescreenCommand:(FBRouteRequest *)request
 {
