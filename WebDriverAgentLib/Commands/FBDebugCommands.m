@@ -38,7 +38,7 @@ static NSString *const SOURCE_FORMAT_XML = @"xml";
 static NSString *const SOURCE_FORMAT_JSON = @"json";
 static NSString *const SOURCE_FORMAT_DESCRIPTION = @"description";
 
-static NSString *const SOURCE_FORMAT_JSON_V2 = @"json_v2";
+//static NSString *const SOURCE_FORMAT_JSON_V2 = @"json_v2";
 static NSString *const SOURCE_FORMAT_DESCRIPTION_V2 = @"accessibilityDescription";
 
 + (id<FBResponsePayload>)handleGetSourceCommand:(FBRouteRequest *)request
@@ -53,9 +53,9 @@ static NSString *const SOURCE_FORMAT_DESCRIPTION_V2 = @"accessibilityDescription
   } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_DESCRIPTION] == NSOrderedSame) {
     result = application.fb_descriptionRepresentation;
   
-  // ADDED BY MO
-  } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_JSON_V2] == NSOrderedSame) {
-    result = application.fb_tree_v2;
+//  // ADDED BY MO
+//  } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_JSON_V2] == NSOrderedSame) {
+//    result = application.fb_tree_v2;
   // ADDED BY MO
   } else if ([sourceType caseInsensitiveCompare:SOURCE_FORMAT_DESCRIPTION_V2] == NSOrderedSame) {
     result = application.fb_descriptionRepresentation_v2;

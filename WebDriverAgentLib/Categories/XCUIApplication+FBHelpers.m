@@ -165,23 +165,23 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
 }
 
 
-// ADDED BY MO
-- (NSDictionary *)fb_tree_v2
-{
-  if ([FBConfiguration shouldUseTestManagerForVisibilityDetection]) {
-    [self fb_waitUntilSnapshotIsStable];
-  }
-  
-  NSError * error;
-  id<XCUIElementSnapshot> snapshot = [self snapshotWithError:&error];
-  if (!snapshot) {
-    //TODO: find child snapshots
-    return [NSDictionary dictionary].copy;
-  }
-  
-  //  NSDictionary<XCUIElementAttributeName, id> *snapshotTree = snapshot.dictionaryRepresentation;
-  return snapshot.dictionaryRepresentation;
-}
+//// ADDED BY MO
+//- (NSDictionary *)fb_tree_v2
+//{
+//  if ([FBConfiguration shouldUseTestManagerForVisibilityDetection]) {
+//    [self fb_waitUntilSnapshotIsStable];
+//  }
+//
+//  NSError * error;
+//  id<XCUIElementSnapshot> snapshot = [self snapshotWithError:&error];
+//  if (!snapshot) {
+//    //TODO: find child snapshots
+//    return [NSDictionary dictionary].copy;
+//  }
+//
+//  //  NSDictionary<XCUIElementAttributeName, id> *snapshotTree = snapshot.dictionaryRepresentation;
+//  return snapshot.dictionaryRepresentation;
+//}
 
 // ADDED BY MO
 - (NSString *)fb_descriptionRepresentation_v2 {

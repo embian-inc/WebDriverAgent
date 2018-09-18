@@ -49,9 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable XCUIElement *)fb_activeElement;
 
-//ADDED BY MO: xcode10 XCUIElementSnapshot
-- (NSDictionary *)fb_tree_v2;
-
+////ADDED BY MO: xcode10 XCUIElementSnapshot
+//- (NSDictionary *)fb_tree_v2;
 
 //ADDED BY MO: XCElementSnapshot#recursiveDescriptionIncludingAccessibilityElement
 - (NSString *)fb_descriptionRepresentation_v2;
