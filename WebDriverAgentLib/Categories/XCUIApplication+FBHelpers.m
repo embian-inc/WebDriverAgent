@@ -187,8 +187,8 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
 - (NSString *)fb_descriptionRepresentation_v2 {
   NSMutableArray<NSString *> *childrenDescriptions = [NSMutableArray array];
   for (XCUIElement *child in [self childrenMatchingType:XCUIElementTypeAny].allElementsBoundByAccessibilityElement) {
-    [childrenDescriptions addObject:(child.fb_snapshotWithAttributes ? : child.fb_lastSnapshot).recursiveDescriptionIncludingAccessibilityElement];
-//    [childrenDescriptions addObject:child.fb_lastSnapshot.recursiveDescriptionIncludingAccessibilityElement];
+//    [childrenDescriptions addObject:(child.fb_snapshotWithAttributes ? : child.fb_lastSnapshot).recursiveDescriptionIncludingAccessibilityElement];
+    [childrenDescriptions addObject:child.fb_lastSnapshot.recursiveDescriptionIncludingAccessibilityElement];
 //    [childrenDescriptions addObject:child.debugDescription];
   }
   // debugDescription property of XCUIApplication instance shows descendants addresses in memory
