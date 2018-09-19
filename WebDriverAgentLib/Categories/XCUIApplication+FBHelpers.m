@@ -216,8 +216,8 @@ const static NSTimeInterval FBMinimumAppSwitchWait = 3.0;
     width = rect.size.height;
     height = rect.size.width;
   }
-  
-  NSString * applicationDescription = [NSString stringWithFormat:@"Application, bundle: %@, rotation: %d, {{%.1f, %.1f}, {%.1f, %.1f}}", self.bundleID, rotation, x, y, width, height];
+  NSString *pid = [NSString stringWithFormat:@"%ld", (long)self.processID];
+  NSString *applicationDescription = [NSString stringWithFormat:@"Application, bundle: %@, rotation: %d, {{%.1f, %.1f}, {%.1f, %.1f}}, pid: %@", self.bundleID, rotation, x, y, width, height, pid];
   
   if (0 == childrenDescriptions.count) {
     return applicationDescription;
