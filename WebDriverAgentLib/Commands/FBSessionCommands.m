@@ -19,6 +19,8 @@
 #import "XCUIDevice+FBHealthCheck.h"
 #import "XCUIDevice+FBHelpers.h"
 
+#import "FBAlert.h"
+
 @implementation FBSessionCommands
 
 #pragma mark - <FBCommandHandler>
@@ -62,11 +64,35 @@
   return FBResponseWithOK();
 }
 
++ (BOOL)fb_alertDismiss
+{
+  @try {
+    FBApplication *application = [FBApplication fb_activeApplication];
+    FBAlert *alert = [FBAlert alertWithApplication:application];
+    NSError *error;
+    
+    if (!alert.isPresent) {
+      return YES;
+    }
+    if (![alert dismissWithError:&error]) {
+      NSLog(@"fb_alertDismissError: %@", error);
+      return NO;
+    }
+    return YES;
+  } @catch (NSException *exception) {
+    NSLog(@"%@", exception.reason);
+  }
+  return NO;
+}
+
 + (id<FBResponsePayload>)handleCreateSession:(FBRouteRequest *)request
 {
   NSDictionary *requirements = request.arguments[@"desiredCapabilities"];
   NSString *bundleID = requirements[@"bundleId"];
   NSString *appPath = requirements[@"app"];
+  
+  [[self class] fb_alertDismiss];
+  
   if (!bundleID) {
     return FBResponseWithErrorFormat(@"'bundleId' desired capability not provided");
   }
