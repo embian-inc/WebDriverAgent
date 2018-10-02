@@ -64,6 +64,7 @@
   return FBResponseWithOK();
 }
 
+// ADDED BY MO
 + (BOOL)fb_alertDismiss
 {
   @try {
@@ -91,6 +92,7 @@
   NSString *bundleID = requirements[@"bundleId"];
   NSString *appPath = requirements[@"app"];
   
+  [[self class] fb_alertDismiss];
   [[self class] fb_alertDismiss];
   
   if (!bundleID) {
