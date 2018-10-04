@@ -8,7 +8,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "XCUIApplication.h"
 
 @class FBApplication;
 @class FBElementCache;
@@ -52,6 +51,15 @@ extern NSString *const FBApplicationCrashedException;
 + (instancetype)sessionWithApplication:(nullable FBApplication *)application;
 
 /**
+ Creates and saves new session for application with default alert handling behaviour
+
+ @param application The application that we want to create session for
+ @param defaultAlertAction The default reaction to on-screen alert. Either 'accept' or 'dismiss'
+ @return new session
+ */
++ (instancetype)sessionWithApplication:(nullable FBApplication *)application defaultAlertAction:(NSString *)defaultAlertAction;
+
+/**
  Kills application associated with that session and removes session
  */
 - (void)kill;
@@ -61,11 +69,13 @@ extern NSString *const FBApplicationCrashedException;
  !This method is only available since Xcode9 SDK
 
  @param bundleIdentifier Valid bundle identifier of the application to be launched
+ @param shouldWaitForQuiescence whether to wait for quiescence on application startup
  @param arguments The optional array of application command line arguments. The arguments are going to be applied if the application was not running before.
  @param environment The optional dictionary of environment variables for the application, which is going to be executed. The environment variables are going to be applied if the application was not running before.
  @throws FBApplicationMethodNotSupportedException if the method is not supported with the current XCTest SDK
  */
 - (void)launchApplicationWithBundleId:(NSString *)bundleIdentifier
+              shouldWaitForQuiescence:(nullable NSNumber *)shouldWaitForQuiescence
                             arguments:(nullable NSArray<NSString *> *)arguments
                           environment:(nullable NSDictionary <NSString *, NSString *> *)environment;
 
