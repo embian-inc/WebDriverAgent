@@ -52,7 +52,7 @@
     [[FBRoute POST:@"/wda/getPasteboard"] respondWithTarget:self action:@selector(handleGetPasteboard:)],
     [[FBRoute GET:@"/wda/batteryInfo"] respondWithTarget:self action:@selector(handleGetBatteryInfo:)],
     //ADDED BY MO: waitForIdle
-    [[FBRoute POST:@"/wait_for_idle"] respondWithTarget:self action:@selector(handleWaitForIdle:)],
+    [[FBRoute POST:@"/wda/waitForIdle"] respondWithTarget:self action:@selector(handleWaitForIdle:)],
   ];
 }
 
